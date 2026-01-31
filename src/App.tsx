@@ -25,7 +25,7 @@ const BackendForm: Component = () => {
         />
         <input type="submit" value="Submit" />
       </form>
-      <p>Backend instuctions</p>
+      <p>Backend instructions</p>
       <ol>
         <li>
           Make sure you have{' '}
@@ -125,45 +125,34 @@ const TodoApp: Component<{ backend: string }> = (props) => {
     refetch();
   };
 
+  const doneFilters = [
+    ['all', 'All'],
+    ['done', 'Done'],
+    ['notdone', 'Not Done'],
+  ] as const;
   return (
     <div>
       <ErrorBoundary fallback={<div>Error loading data</div>}>
         <h3>Todo App</h3>
         <fieldset style={{ border: 'none', padding: '0' }}>
           <legend>Filter</legend>
-          <label>
-            <input
-              type="radio"
-              name="filter"
-              value="all"
-              checked={filter() === 'all'}
-              onChange={(e) => setFilter(e.currentTarget.value as DoneFilter)}
-            />
-            <span>All</span>
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="filter"
-              value="done"
-              checked={filter() === 'done'}
-              onChange={(e) => setFilter(e.currentTarget.value as DoneFilter)}
-            />
-            <span>Done</span>
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="filter"
-              value="notdone"
-              checked={filter() === 'notdone'}
-              onChange={(e) => setFilter(e.currentTarget.value as DoneFilter)}
-            />
-            <span>Not Done</span>
-          </label>
+          <For each={doneFilters}>
+            {([value, label]) => (
+              <label>
+                <input
+                  type="radio"
+                  name="filter"
+                  value={value}
+                  checked={filter() === value}
+                  onChange={() => setFilter(value)}
+                />
+                <span>{label}</span>
+              </label>
+            )}
+          </For>
         </fieldset>
         <div style={{ 'margin-top': '1rem', 'margin-bottom': '1rem' }}>
-          <For each={data()} fallback={<div>Loading...</div>}>
+          <For each={data()} fallback={<div>No todos</div>}>
             {(todo) => (
               <div>
                 <div
