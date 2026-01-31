@@ -4,15 +4,18 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "vite",
+        "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "regen:api": "openapi-typescript http://localhost:8000/openapi.json -o src/api.d.ts",
+    "typecheck": "tsgo -b --noEmit"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "devDependencies": {
+    "@typescript/native-preview": "^7.0.0-dev.20260131.1",
+    "openapi-typescript": "^7.10.1",
     "solid-devtools": "^0.34.3",
-    "typescript": "^5.7.2",
     "vite": "^7.1.4",
     "vite-plugin-solid": "^2.11.8"
   },
