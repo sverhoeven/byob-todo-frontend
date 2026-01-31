@@ -13,4 +13,8 @@ bun build
 bun regen:api
 # Typecheck
 bun typecheck
+# Lint, format, and sort imports and apply all fixes
+bun biome check --write
+# Check only (no fixes)
+bun biome check
 ```

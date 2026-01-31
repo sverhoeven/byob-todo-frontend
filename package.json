@@ -4,7 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-        "start": "vite",
+    "start": "vite",
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
@@ -13,6 +13,7 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
+    "@biomejs/biome": "2.3.13",
     "@typescript/native-preview": "^7.0.0-dev.20260131.1",
     "openapi-typescript": "^7.10.1",
     "solid-devtools": "^0.34.3",
