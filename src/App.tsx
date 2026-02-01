@@ -39,21 +39,22 @@ const BackendForm: Component = () => {
           installed
         </li>
         <li>
-          You can download backend script from{' '}
-          <a
-            href="https://github.com/sverhoeven/byod-todo-backend/blob/main/byod-todo-backend.py"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            here
-          </a>
-        </li>
-        <li>
-          Make it executable with <code>chmod +x byod-todo-backend.py</code>
-        </li>
-        <li>
           You can start the backend with
-          <code>./byod-todo-backend.py</code>
+          <code>
+            uv run
+            https://raw.githubusercontent.com/sverhoeven/byob-todo-backend/refs/heads/main/byod-todo-backend.py
+          </code>{' '}
+          <button
+            onClick={() =>
+              navigator.clipboard.writeText(
+                'uv run https://raw.githubusercontent.com/sverhoeven/byob-todo-backend/refs/heads/main/byod-todo-backend.py',
+              )
+            }
+            title="Copy to clipboard"
+            type="button"
+          >
+            📋
+          </button>
         </li>
       </ol>
     </div>

@@ -1,5 +1,7 @@
 # Bring your own backend - TODO Frontend
 
+Companion of the [BYOB TODO backend](https://github.com/sverhoeven/byob-todo-backend).
+
 ## Usage
 
 ```bash
