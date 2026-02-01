@@ -16,6 +16,7 @@ const BackendForm: Component = () => {
       <h2>Please specify backend URL</h2>
       <form method="get">
         <label for="backend">Backend URL:</label>
+        {''}
         <input
           type="text"
           id="backend"
@@ -39,7 +40,7 @@ const BackendForm: Component = () => {
           installed
         </li>
         <li>
-          You can start the backend with
+          You can start the backend with{' '}
           <code>
             uv run
             https://raw.githubusercontent.com/sverhoeven/byob-todo-backend/refs/heads/main/byod-todo-backend.py
