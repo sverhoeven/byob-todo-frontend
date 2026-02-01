@@ -9,8 +9,8 @@ Companion of the [BYOB TODO backend](https://github.com/sverhoeven/byob-todo-bac
 bun i
 # Start development server
 bun dev
-# Bundle
-bun build
+# Bundle to dist/ directory
+bun run build
 # Regenerate API types
 bun regen:api
 # Typecheck
