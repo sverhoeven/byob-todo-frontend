@@ -127,6 +127,30 @@ const TodoApp: Component<{ backend: string }> = (props) => {
     refetch();
   };
 
+  function errorHandler(error: unknown) {
+    console.error('An error occurred:', error);
+    const message = (error as Error).message;
+    if (message.includes('Failed to fetch')) {
+      return (
+        <div>
+          <p>Could not connect to backend at {props.backend}. </p>
+          <ul>
+            <li>Please make sure the backend is running.</li>
+            <li>
+              Please make sure to disable Ad blocker or add an exception for
+              this site.
+            </li>
+            <li>
+              Please allow web browser (like Google Chrome) to access the local
+              network.
+            </li>
+          </ul>
+        </div>
+      );
+    }
+    return <div>An error occurred: {(error as Error).message}</div>;
+  }
+
   const doneFilters = [
     ['all', 'All'],
     ['done', 'Done'],
@@ -134,7 +158,7 @@ const TodoApp: Component<{ backend: string }> = (props) => {
   ] as const;
   return (
     <div>
-      <ErrorBoundary fallback={<div>Error loading data</div>}>
+      <ErrorBoundary fallback={errorHandler}>
         <h3>Todo App</h3>
         <fieldset style={{ border: 'none', padding: '0' }}>
           <legend>Filter</legend>
