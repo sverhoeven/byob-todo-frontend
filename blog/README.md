@@ -202,6 +202,8 @@ Go to [https://sverhoeven.github.io/byob-todo-frontend/](https://sverhoeven.gith
 
 The source code is available at [byob-todo-frontend](https://github.com/sverhoeven/byob-todo-frontend) and [byob-todo-backend](https://github.com/sverhoeven/byob-todo-backend)
 
+In the frontend I used SolidJS and bun to keep the frontend light.
+In the backend I used uv and inline dependencies to keep the backend easy to run.
 
 ## When to use Bring your own backend (BYOB)
 
