@@ -8,7 +8,7 @@ For example currently I am working on the [Urban-M4 project](https://research-so
 
 But as the project neared its end, a familiar worry crept in: *what happens after I leave?*
 
-## The Sustainability Problem
+## The sustainability problem
 
 The project partners are domain scientists first and foremost. They focus on their research, not on maintaining web applications.
 Maintaining a backend server written in Python, is something they have the time and expertise for.
@@ -17,14 +17,14 @@ The traditional approach would have been to build a monolithic application where
 
 I needed a different approach. One where the frontend could essentially "freeze" after I left, while my partners could continue evolving their backend independently.
 
-## The Solution: Bring Your Own Backend
+## The solution: Bring Your Own Backend
 
 The key insight was simple: **decouple where the frontend is hosted from where the backend runs**.
 
 Instead of deploying the frontend and backend together on some server that my partners would need to maintain, I separated them completely:
 
 - **Frontend**: As a single page web application using [React framework](https://react.dev/). Hosted as static files on [GitHub Pages](https://pages.github.com/) — zero maintenance, free hosting, always available
-- **Backend**: Runs on my partners' own machines, under their full control
+- **Backend**: Runs on my Users or partners' own machines, under their full control
 
 The magic that connects them? A URL query parameter.
 
@@ -34,12 +34,12 @@ graph TB
         FE[Single page webapplication<br/>Static Files]
     end
     
-    subgraph "Partner's Machine"
+    subgraph "User's Machine"
         BE[Python Backend<br/>FastAPI]
         DATA[(Local Data<br/>Images, DuckdDB)]
     end
     
-    USER[Partner/User] -->|"1. Runs backend locally"| BE
+    USER[User] -->|"1. Runs backend locally"| BE
     USER -->|"2. Visits frontend with<br/>?backend=http://localhost:5000"| FE
     FE <-->|"3. API calls over HTTP"| BE
     BE <--> DATA
@@ -48,7 +48,7 @@ graph TB
     style BE fill:#fff3e0
 ```
 
-## The Magic: URL-Based Backend Configuration
+## The Magic: URL-based backend configuration
 
 Here's the core pattern. The frontend reads the backend URL from the query string:
 
@@ -73,14 +73,14 @@ When the frontend is unable to connect to the specified backend, it shows an err
 
 The workflow becomes beautifully simple:
 
-1. Partner starts their backend locally
-2. Partner visits the frontend URL with `?backend=http://localhost:5000`
+1. A user starts their backend locally
+2. A user visits the frontend URL with `?backend=http://localhost:5000`
 3. The frontend connects to their local backend
 4. All data stays on their machine
 
 No rebuilds. No redeployments. No complex configuration. Just a URL parameter.
 
-## Keeping It Simple for Partners
+## Keeping it simple for project partners
 
 For this pattern to work after I leave, the backend needs to be dead simple to run. 
 
@@ -141,7 +141,7 @@ if __name__ == "__main__":
 
 If you're feeling more helpful you can use [webbrowser.open(url)](https://docs.python.org/3/library/webbrowser.html#webbrowser.open) to open the URL automatically in the user's default browser.
 
-## The Contract: OpenAPI as the Bridge
+## The contract: OpenAPI as the bridge
 
 The frontend and backend need to agree on an API contract. Rather than maintaining documentation that inevitably drifts from reality, I used [OpenAPI](https://www.openapis.org/) as the single source of truth.
 
@@ -205,13 +205,14 @@ The source code is available at [byob-todo-frontend](https://github.com/sverhoev
 In the frontend I used SolidJS and bun to keep the frontend light.
 In the backend I used uv and inline dependencies to keep the backend easy to run.
 
-## When to use Bring your own backend (BYOB)
+## When to use BYOB
 
 This pattern isn't for every project, but it shines when:
 
 - **Different expertise levels**: Frontend specialists work with domain experts who prefer other languages
-- **Data sensitivity**: Partners need to keep data on their own machines
+- **Data sensitivity**: Users need to keep data on their own machines
 - **Limited resources**: No budget for ongoing server maintenance
 - **Collaborative research**: Multiple groups might want to run their own backends
+- **Broad usage**: Not only useful for project partners. A wide audience can use the frontend, each spinning up their own backend.
 
 The "Bring Your Own Backend" pattern turned what could have been abandoned software into a sustainable tool that my partners can use and evolve long after our collaboration ended. Sometimes the best code you write is the code others don't have to maintain.
