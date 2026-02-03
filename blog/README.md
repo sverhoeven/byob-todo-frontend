@@ -2,7 +2,7 @@
 
 *A pattern for sustainable research software collaboration*
 
-As a research software engineer (RSE) working at the Netherlands eScience Center, I work on a projects together with domain scientists at univerisities and research institutes. 
+As a research software engineer (RSE) working at the Netherlands eScience Center, I work on a projects together with domain scientists at universities and research institutes. 
 
 For example currently I am working on the [Urban-M4 project](https://research-software-directory.org/projects/urban-m4) where we are trying to improve a weather model by telling it the properties of buildings in a city. As part of this project, I built a web-based application called [streetscapes-explorer](https://github.com/Urban-M4/Urban-M5) to create, review and edit segmented street view images. My engineering colleagues and project partners worked on the machine learning models and data processing pipelines that powered the backend of the web application.
 
@@ -11,7 +11,7 @@ But as the project neared its end, a familiar worry crept in: *what happens afte
 ## The sustainability problem
 
 The project partners are domain scientists first and foremost. They focus on their research, not on maintaining web applications.
-Maintaining a backend server written in Python, is something they have the time and expertise for.
+Maintaining a backend server written in Python is something they have the time and expertise in.
 
 The traditional approach would have been to build a monolithic application where frontend and backend are tightly coupled, deployed together, and maintained as one unit. But that would mean my partners would need to understand the frontend and keep the server running, up to date and secure. A recipe for software rot and eventual abandonment.
 
@@ -36,7 +36,7 @@ graph TB
     
     subgraph "User's Machine"
         BE[Python Backend<br/>FastAPI]
-        DATA[(Local Data<br/>Images, DuckdDB)]
+        DATA[(Local Data<br/>Images, DuckDB)]
     end
     
     USER[User] -->|"1. Runs backend locally"| BE
@@ -71,7 +71,7 @@ When the frontend is unable to connect to the specified backend, it shows an err
 
 [![Streetscapes Explorer Backend Error](streetscapes-explorer-backend-error.png)](streetscapes-explorer-backend-error.png)
 
-The workflow becomes beautifully simple:
+The workflow becomes simply:
 
 1. A user starts their backend locally
 2. A user visits the frontend URL with `?backend=http://localhost:5000`
@@ -94,7 +94,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 ```
 
-Web browsers do not like the frontend and backend to being at different URLs.
+Web browsers do not like the frontend and backend to be at different URLs.
 For this in the backend we need to enable [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) like so:
 
 ```python
@@ -105,7 +105,7 @@ app.add_middleware(
 )
 ```
 
-Then anyone can simply write a decorated and annotated Python function to define an API endpoint:
+Then anyone can simply write a decorated and type annotated Python function to define an API endpoint:
 
 ```python
 @dataclass
@@ -148,11 +148,10 @@ The frontend and backend need to agree on an API contract. Rather than maintaini
 FastAPI automatically generates an OpenAPI specification from the Python code. I then use [OpenAPI TypeScript](https://openapi-ts.dev/introduction) to generate TypeScript types:
 
 ```bash
-openapi-typescript http://localhost:5000/openapi.json -o ./src/lib/streetscapes-api.ts"
+openapi-typescript http://localhost:5000/openapi.json -o ./src/lib/streetscapes-api.ts
 ```
 
-
-The frontend then make type-safe API calls:
+The frontend then makes type-safe API calls:
 
 ```tsx
 import createClient from 'openapi-fetch';
@@ -177,32 +176,12 @@ function StreetscapesExplorer({backend}: { backend: string }) {
 
 This gives us compile-time safety: if my partners change the API contract, the TypeScript compiler will catch any mismatches when regenerating the types.
 
-```mermaid
-sequenceDiagram
-    participant Users terminal
-    participant Users web browser
-    participant Backend as Local Backend
-    participant Frontend as GitHub Pages
-    
-    Users terminal->>Backend: streetscapes-explorer
-    Note over Backend: Starts on localhost:8000
-    Backend-->> Users web browser: Prints frontend URL
-    
-    Users web browser->>Frontend: Opens URL with ?backend=localhost:8000
-    Frontend->>Backend: GET /images
-    Backend-->>Frontend: JSON response
-    Frontend-->> Users web browser: Renders images
-```
-
 ## Try it out yourself
 
-I made a minimal example of this pattern with a simple TODO application.
+I made a minimal example of this pattern with a [simple TODO application](https://sverhoeven.github.io/byob-todo-frontend/).
+To use follow the instructions to run the backend locally.
 
-Go to [https://sverhoeven.github.io/byob-todo-frontend/](https://sverhoeven.github.io/byob-todo-frontend/) and follow the instructions to run the backend locally.
-
-The source code is available at [byob-todo-frontend](https://github.com/sverhoeven/byob-todo-frontend) and [byob-todo-backend](https://github.com/sverhoeven/byob-todo-backend)
-
-In the frontend I used SolidJS and bun to keep the frontend light.
+The source code is available at [byob-todo-frontend](https://github.com/sverhoeven/byob-todo-frontend) and [byob-todo-backend](https://github.com/sverhoeven/byob-todo-backend). In the frontend I used SolidJS and bun to keep the frontend light.
 In the backend I used uv and inline dependencies to keep the backend easy to run.
 
 ## When to use BYOB
@@ -213,6 +192,5 @@ This pattern isn't for every project, but it shines when:
 - **Data sensitivity**: Users need to keep data on their own machines
 - **Limited resources**: No budget for ongoing server maintenance
 - **Collaborative research**: Multiple groups might want to run their own backends
-- **Broad usage**: Not only useful for project partners. A wide audience can use the frontend, each spinning up their own backend.
 
 The "Bring Your Own Backend" pattern turned what could have been abandoned software into a sustainable tool that my partners can use and evolve long after our collaboration ended. Sometimes the best code you write is the code others don't have to maintain.
