@@ -10,12 +10,7 @@ But as the project neared its end, a familiar worry crept in: *what happens afte
 
 ## The sustainability problem
 
-<<<<<<< HEAD
 The project partners are domain scientists first and foremost. They have the expertise and time to maintain a Python backend—updating dependencies, fixing bugs, evolving their data processing pipelines. But maintaining a highly interactive frontend written in TypeScript, with its constantly shifting JavaScript ecosystem, build tools, and UI frameworks, is a different story. That's not where their expertise or time should go.
-=======
-The project partners are domain scientists first and foremost. They focus on their research, not on maintaining web applications.
-Maintaining a backend server written in Python is something they have the time and expertise in.
->>>>>>> 10360e2dd623ff45a3bd0eb3dded8afa8568794e
 
 A traditional monolithic application—with frontend and backend tightly coupled and deployed together—would force them to maintain both. They'd need to keep the server running, dependencies updated, security patches applied, and yes, understand that frontend code when something inevitably breaks. Given their constraints, this is a recipe for software rot and eventual abandonment.
 
