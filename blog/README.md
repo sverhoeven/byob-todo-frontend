@@ -10,12 +10,11 @@ But as the project neared its end, a familiar worry crept in: *what happens afte
 
 ## The sustainability problem
 
-The project partners are domain scientists first and foremost. They focus on their research, not on maintaining web applications.
-Maintaining a backend server written in Python, is something they have the time and expertise for.
+The project partners are domain scientists first and foremost. They have the expertise and time to maintain a Python backend—updating dependencies, fixing bugs, evolving their data processing pipelines. But maintaining a highly interactive frontend written in TypeScript, with its constantly shifting JavaScript ecosystem, build tools, and UI frameworks, is a different story. That's not where their expertise or time should go.
 
-The traditional approach would have been to build a monolithic application where frontend and backend are tightly coupled, deployed together, and maintained as one unit. But that would mean my partners would need to understand the frontend and keep the server running, up to date and secure. A recipe for software rot and eventual abandonment.
+A traditional monolithic application—with frontend and backend tightly coupled and deployed together—would force them to maintain both. They'd need to keep the server running, dependencies updated, security patches applied, and yes, understand that frontend code when something inevitably breaks. Given their constraints, this is a recipe for software rot and eventual abandonment.
 
-I needed a different approach. One where the frontend could essentially "freeze" after I left, while my partners could continue evolving their backend independently.
+I needed a different approach. One where the frontend could essentially "freeze" after I left, requiring zero maintenance, while my partners could continue evolving their backend independently.
 
 ## The solution: Bring Your Own Backend
 
